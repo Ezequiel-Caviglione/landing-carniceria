@@ -1,18 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { animate } from 'animejs';
 
 const OurStory: React.FC = () => {
-  const titleRef = useRef<HTMLHeadingElement>(null);
+  const [text, setText] = useState('');
   const cursorRef = useRef<HTMLSpanElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const fullText = 'Nuestra Historia';
 
   useEffect(() => {
-    const title = titleRef.current;
     const cursor = cursorRef.current;
-    if (!title || !cursor) return;
-
-    const text = title.innerText.trim();
-    title.innerText = '';
+    if (!cursor) return;
 
     let started = false;
 
@@ -22,8 +19,8 @@ const OurStory: React.FC = () => {
         
         let i = 0;
         function type() {
-          if (i < text.length) {
-            title!.innerText += text.charAt(i);
+          if (i < fullText.length) {
+            setText(fullText.slice(0, i + 1));
             i++;
             setTimeout(type, 40);
           }
@@ -54,9 +51,9 @@ const OurStory: React.FC = () => {
           
           <div className="text-center border-b-2 border-charcoal pb-8 mb-12">
             <p className="text-sm font-bold text-charcoal uppercase tracking-[0.3em] mb-4 italic">El Diario del Buen Gusto</p>
-            <div className="relative inline-block">
-              <h2 ref={titleRef} className="font-bevan text-4xl md:text-7xl text-classic-crimson leading-none">
-                Nuestra Historia
+            <div className="relative inline-block max-w-[180px] md:max-w-none">
+              <h2 className="font-bevan text-4xl md:text-7xl text-classic-crimson leading-none">
+                {text}
               </h2>
               <span ref={cursorRef} className="cursor-blink"></span>
             </div>
